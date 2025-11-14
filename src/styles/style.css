@@ -2144,29 +2144,8 @@ body.loaded .examples-section {
 }
 
 /* ===== СТИЛИ ЧАТА ИЗ СТАРОГО ПРОЕКТА ===== */
-.chat-container {
-  width: 100%;
-  max-width: 1200px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px);
-  position: relative;
-}
 
-/* Шапка чата */
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(0, 191, 255, 0.2);
-  backdrop-filter: blur(20px);
-}
-
+/* Не трогать! */
 .header-left {
   display: flex;
   align-items: center;
@@ -2188,18 +2167,11 @@ body.loaded .examples-section {
   border-color: rgba(0, 191, 255, 0.5);
   box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
 }
+/* Не трогать! */
 
-.chat-title h1 {
-  color: #ffffff;
-  font-size: 1.5rem;
-  margin: 0;
-}
 
-.chat-status {
-  color: #00ff88;
-  font-size: 0.8rem;
-}
 
+/* То что ниже тоже не трогать */
 .header-right {
   display: flex;
   align-items: center;
@@ -2221,6 +2193,7 @@ body.loaded .examples-section {
   border-color: rgba(0, 191, 255, 0.5);
   color: #00bfff;
 }
+/* То что выше не трогать! */
 
 /* Область сообщений */
 .chat-messages {
@@ -2239,13 +2212,13 @@ body.loaded .examples-section {
 }
 
 /* Приветственное сообщение */
-.welcome-message {
+/*.welcome-message {
   text-align: center;
   padding: 3rem 2rem;
   color: rgba(255, 255, 255, 0.8);
-}
+}*/
 
-.welcome-avatar {
+/*.welcome-avatar {
   width: 80px;
   height: 80px;
   margin: 0 auto 1.5rem;
@@ -2255,28 +2228,28 @@ body.loaded .examples-section {
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(0, 191, 255, 0.3);
-}
+}*/
 
-.welcome-message h2 {
+/*.welcome-message h2 {
   color: #00bfff;
   margin-bottom: 1rem;
   font-size: 1.8rem;
-}
+}*/
 
-.welcome-message p {
+/*.welcome-message p {
   margin-bottom: 2rem;
   font-size: 1.1rem;
   line-height: 1.6;
-}
+}*/
 
-.suggestion-chips {
+/*.suggestion-chips {
   display: flex;
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-}
+}*/
 
-.chip {
+/*.chip {
   background: rgba(0, 191, 255, 0.1);
   border: 1px solid rgba(0, 191, 255, 0.3);
   color: #00bfff;
@@ -2285,7 +2258,7 @@ body.loaded .examples-section {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 0.9rem;
-}
+}*/
 
 .chip:hover {
   background: rgba(0, 191, 255, 0.2);
@@ -2295,23 +2268,23 @@ body.loaded .examples-section {
 }
 
 /* Сообщения */
-.message {
+/*.message {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
   max-width: 80%;
-}
+}*/
 
-.message.user {
+/*.message.user {
   margin-left: auto;
   flex-direction: row-reverse;
-}
+}*/
 
 .message.assistant {
   margin-right: auto;
 }
 
-.message-avatar {
+/*.message-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -2319,33 +2292,23 @@ body.loaded .examples-section {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-}
+}*/
 
-.message.user .message-avatar {
-  background: rgba(0, 191, 255, 0.2);
-  border: 1px solid rgba(0, 191, 255, 0.4);
-}
-
-.message.assistant .message-avatar {
-  background: rgba(138, 43, 226, 0.2);
-  border: 1px solid rgba(138, 43, 226, 0.4);
-}
-
-.message-content {
+/*.message-content {
   flex: 1;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 1rem;
   position: relative;
-}
+}*/
 
-.message.user .message-content {
+/*.message.user .message-content {
   background: rgba(0, 191, 255, 0.1);
   border-color: rgba(0, 191, 255, 0.2);
-}
+}*/
 
-.copy-btn {
+/*.copy-btn {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -2356,7 +2319,7 @@ body.loaded .examples-section {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
-}
+}*/
 
 .copy-btn:hover {
   background: rgba(0, 191, 255, 0.2);
@@ -2376,7 +2339,7 @@ body.loaded .examples-section {
 }
 
 /* Индикатор печати */
-.typing-indicator {
+/*.typing-indicator {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -2385,9 +2348,9 @@ body.loaded .examples-section {
   border-radius: 12px;
   margin: 0 1rem 1rem;
   max-width: fit-content;
-}
+}*/
 
-.typing-avatar {
+/*.typing-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -2396,7 +2359,7 @@ body.loaded .examples-section {
   justify-content: center;
   background: rgba(138, 43, 226, 0.2);
   border: 1px solid rgba(138, 43, 226, 0.4);
-}
+}*/
 
 .typing-dots {
   display: flex;
