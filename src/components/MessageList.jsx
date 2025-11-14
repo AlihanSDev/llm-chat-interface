@@ -3,14 +3,14 @@ import Message from './Message';
 
 const MessageList = ({ messages }) => {
   return (
-    <div className="messages-container">
+    <>
       {messages.map((message, index) => (
         <Message 
           key={index} 
           message={message} 
         />
       ))}
-    </div>
+    </>
   );
 };
 

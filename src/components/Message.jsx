@@ -1,4 +1,5 @@
-// УБЕДИСЬ что Message.jsx имеет такой код:
+// ТУТ ИЗ-ЗА ТЕБЯ БЫЛА ОШИБКА! НЕ ТРОГАЙ КОД! НЕ ТРОГАЙ ПРОШУ
+// Я ДЛЯ КОГО КОММЕНТЫ ОСТАВЛЯЮ
 import React from 'react';
 
 const Message = ({ message }) => {
@@ -8,7 +9,6 @@ const Message = ({ message }) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(message.content);
-      // Можно добавить toast уведомление скоро
       console.log('Текст скопирован!');
     } catch (err) {
       console.error('Ошибка копирования:', err);
@@ -24,9 +24,9 @@ const Message = ({ message }) => {
 
   return (
     <div className={`message ${isUser ? 'user' : 'assistant'} ${isError ? 'error' : ''}`}>
-      <div className="message-avatar">
+      <div className={`message-avatar ${isUser ? 'user-avatar' : ''}`}>
         {isUser ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="user-icon">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
             <circle cx="12" cy="7" r="4"/>
           </svg>

@@ -4,8 +4,7 @@
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
+    background: transparent;
     position: relative;
     margin: 0;
     padding: 0;
@@ -83,7 +82,10 @@
 
 .header-right {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
 }
 
 .chat-action-btn {
@@ -116,9 +118,12 @@
 }
 
 .messages-container {
-    max-width: 900px;
+    max-width: 720px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 /* Приветственное сообщение */
@@ -193,21 +198,25 @@
     transition: all 0.3s ease;
     font-size: 0.9rem;
     font-weight: 500;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.2), inset 0 0 10px rgba(0, 191, 255, 0.1);
 }
 
 .chip:hover {
     background: rgba(0, 191, 255, 0.2);
     border-color: rgba(0, 191, 255, 0.5);
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.4), inset 0 0 15px rgba(0, 191, 255, 0.15);
     transform: translateY(-2px);
 }
 
 /* Сообщения */
 .message {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  max-width: 80%;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    align-items: flex-end;
+    box-sizing: border-box;
 }
 
 @keyframes messageSlideIn {
@@ -222,12 +231,10 @@
 }
 
 .message.user {
-  margin-left: auto;
-  flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
 .message.assistant {
-    flex-direction: row;
     justify-content: flex-start;
 }
 
@@ -239,13 +246,17 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin: 0 1rem;
     position: relative;
 }
 
 .message.user .message-avatar {
-  background: rgba(0, 191, 255, 0.2);
-  border: 1px solid rgba(0, 191, 255, 0.4);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+.message.user .message-avatar .user-icon {
+    color: #00bfff;
 }
 
 .message.assistant .message-avatar {
@@ -263,7 +274,13 @@
     padding: 1rem 1.25rem;
     position: relative;
     backdrop-filter: blur(10px);
+    word-wrap: break-word;
 }
+
+.message.user .message-avatar { order: 2; }
+.message.user .message-content { order: 1; }
+.message.assistant .message-avatar { order: 1; }
+.message.assistant .message-content { order: 2; }
 
 .message.user .message-content {
     background: rgba(0, 191, 255, 0.15);
@@ -309,7 +326,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem 1.5rem;
-    max-width: 900px;
+    max-width: 720px;
     margin: 0 auto;
     animation: messageSlideIn 0.5s ease;
 }
@@ -374,7 +391,7 @@
 }
 
 .chat-input-container {
-    max-width: 900px;
+    max-width: 720px;
     margin: 0 auto;
 }
 
