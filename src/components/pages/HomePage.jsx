@@ -9,7 +9,7 @@ const HomePage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // Эмуляция загрузки страницы как в старом проекте
+
     setTimeout(() => {
       document.body.classList.add('loaded');
       document.querySelectorAll('.input-section, .examples-section').forEach((el, index) => {
@@ -38,7 +38,6 @@ const HomePage = () => {
     
     setMessage(actionTexts[action] || '');
     
-    // Добавляем/убираем active класс как в старом проекте
     document.querySelectorAll('.quick-action-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
   };
@@ -49,14 +48,12 @@ const HomePage = () => {
 
   const handleSettingsClick = () => {
     console.log('Открыть настройки');
-    // Здесь будет логика открытия модального окна настроек
   };
 
   return (
     <div className="main-container">
       <BackgroundEffects />
 
-      {/* Дополнительные скрытые поля для отвлечения автозаполнения (как в старом проекте) */}
       <input 
         type="password" 
         autoComplete="off" 
@@ -82,7 +79,6 @@ const HomePage = () => {
         tabIndex="-1" 
       />
 
-      {/* Верхняя панель - ТОЧНАЯ копия из старого проекта */}
       <header className="top-header">
         <div className="header-left">
           <button className="menu-btn" id="menuBtn">
@@ -123,7 +119,7 @@ const HomePage = () => {
         </div>
       </header>
 
-      {/* Центральная область - ТОЧНАЯ копия из старого проекта */}
+      {/* Центральная область */}
       <main className="main-content">
         {/* Поле ввода */}
         <div className="input-section">

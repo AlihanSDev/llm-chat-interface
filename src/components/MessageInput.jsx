@@ -5,58 +5,61 @@ const MessageInput = ({ onSendMessage, disabled }) => {
   const textareaRef = useRef(null);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     if (message.trim() && !disabled) {
       onSendMessage(message.trim());
       setMessage('');
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
+      }
     }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      handleSubmit();
     }
   };
 
-  const autoResizeTextarea = () => {
+  useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
       textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
     }
-  };
-
-  useEffect(() => {
-    autoResizeTextarea();
   }, [message]);
 
   const isSendDisabled = !message.trim() || disabled;
 
   return (
-    <form className="message-input-form" onSubmit={handleSubmit}>
-      <div className="input-container">
+    <div className="chat-input-container">
+      <div className="chat-input-wrapper">
         <textarea
           ref={textareaRef}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder={disabled ? "AI печатает..." : "Введите ваше сообщение..."}
+          placeholder={disabled ? "AI печатает..." : "Введите ваше сообщение... (Shift+Enter для новой строки)"}
           disabled={disabled}
           rows="1"
+          className="chat-message-input"
         />
-        <button 
-          type="submit" 
-          disabled={isSendDisabled}
-          className="send-button"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22,2 15,22 11,13 2,9"></polygon>
-          </svg>
-        </button>
+        <div className="chat-input-actions">
+          <button 
+            className="chat-send-btn" 
+            onClick={handleSubmit}
+            disabled={isSendDisabled}
+            title="Отправить"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+            </svg>
+          </button>
+        </div>
       </div>
-    </form>
+    </div>
   );
 };
 

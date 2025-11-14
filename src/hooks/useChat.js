@@ -40,7 +40,6 @@ export const useChat = () => {
     setIsTyping(true);
 
     try {
-      // Сохраняем сообщение пользователя если есть chatId
       if (currentChatId) {
         await fetch(`/api/chats/${currentChatId}/messages`, {
           method: 'POST',
@@ -49,7 +48,6 @@ export const useChat = () => {
         });
       }
 
-      // Отправляем запрос к LLM
       const response = await fetch('/api/llm/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,7 +61,6 @@ export const useChat = () => {
       const data = await response.json();
       
       if (data.success) {
-        // Добавляем ответ AI
         const aiMessage = {
           role: 'assistant',
           content: data.response,
@@ -72,7 +69,6 @@ export const useChat = () => {
         
         setMessages(prev => [...prev, aiMessage]);
         
-        // Сохраняем ответ AI если есть chatId
         if (currentChatId) {
           await fetch(`/api/chats/${currentChatId}/messages`, {
             method: 'POST',
@@ -85,7 +81,6 @@ export const useChat = () => {
       }
     } catch (error) {
       console.error('Ошибка отправки сообщения:', error);
-      // Показываем сообщение об ошибке
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: `Извините, произошла ошибка: ${error.message}`,

@@ -1,13 +1,9 @@
 import React from 'react';
 import Chat from '../Chat';
-import '../../styles/style.css';
+import '../../styles/chat.css';
 
 const ChatPage = () => {
-  return (
-    <div className="chat-page">
-      <Chat />
-    </div>
-  );
+  return <Chat />;
 };
 
 export default ChatPage;

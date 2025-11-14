@@ -1,3 +1,4 @@
+// УБЕДИСЬ что Message.jsx имеет такой код:
 import React from 'react';
 
 const Message = ({ message }) => {
@@ -7,7 +8,7 @@ const Message = ({ message }) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(message.content);
-      // Можно добавить toast уведомление
+      // Можно добавить toast уведомление скоро
       console.log('Текст скопирован!');
     } catch (err) {
       console.error('Ошибка копирования:', err);

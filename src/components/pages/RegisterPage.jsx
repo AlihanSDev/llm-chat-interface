@@ -12,7 +12,7 @@ const RegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Register data:', formData);
-    // Здесь будет логика регистрации
+    // Здесь будет логика регистрации скоро
   };
 
   const handleChange = (e) => {

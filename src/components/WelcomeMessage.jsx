@@ -8,7 +8,7 @@ const WelcomeMessage = ({ onSuggestionClick }) => {
   ];
 
   return (
-    <div className="welcome-message">
+    <div className="welcome-message" id="welcomeMessage">
       <div className="welcome-avatar">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M9 12l2 2 4-4"/>
