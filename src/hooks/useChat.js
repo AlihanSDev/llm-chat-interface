@@ -9,7 +9,6 @@ export const useChat = () => {
     customApiKey: ''
   });
 
-  // Загрузка истории чата
   const loadChatHistory = useCallback(async (chatId) => {
     if (!chatId || chatId.startsWith('temp_')) return;
     
@@ -25,11 +24,9 @@ export const useChat = () => {
     }
   }, []);
 
-  // Отправка сообщения
   const sendMessage = useCallback(async (content) => {
     if (!content.trim() || isTyping) return;
 
-    // Добавляем сообщение пользователя
     const userMessage = {
       role: 'user',
       content: content,
@@ -92,7 +89,6 @@ export const useChat = () => {
     }
   }, [messages, isTyping, currentChatId, settings]);
 
-  // Создание нового чата
   const createNewChat = useCallback(async () => {
     try {
       const response = await fetch('/api/chats', {
@@ -117,13 +113,11 @@ export const useChat = () => {
     return null;
   }, []);
 
-  // Очистка чата
   const clearChat = useCallback(() => {
     setMessages([]);
     setCurrentChatId(null);
   }, []);
 
-  // Сохранение настроек
   const saveSettings = useCallback(async (newSettings) => {
     setSettings(newSettings);
     
