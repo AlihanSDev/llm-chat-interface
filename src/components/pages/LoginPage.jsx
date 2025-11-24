@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import BackgroundEffects from '../common/BackgroundEffects';
+import '../../styles/App.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -8,17 +9,6 @@ const LoginPage = () => {
     password: '',
     rememberMe: false
   });
-
-  useEffect(() => {
-    setTimeout(() => {
-      document.body.classList.add('loaded');
-      document.querySelectorAll('.input-section, .examples-section').forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('content-loaded');
-        }, index * 200);
-      });
-    }, 100);
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +27,7 @@ const LoginPage = () => {
     <div className="main-container">
       <BackgroundEffects />
 
+      {/* hidden inputs to disable browser autofill (keeps HomePage parity) */}
       <input
         type="password"
         autoComplete="off"
@@ -63,97 +54,89 @@ const LoginPage = () => {
           <h1 className="logo">AI CHAT</h1>
         </div>
         <div className="header-right">
-          <Link to="/register" className="register-link-top">Регистрация</Link>
+          <Link to="/register" className="auth-link">Регистрация</Link>
         </div>
       </header>
 
       <main className="main-content">
-        <div className="input-section">
-          <div className="auth-card">
-            <div className="auth-header">
-              <h2>Вход в систему</h2>
-              <p>Добро пожаловать! Войдите в свой аккаунт для продолжения работы</p>
-            </div>
-
-            <form className="auth-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="username">Имя пользователя или Email</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  className="form-input"
-                  placeholder="Введите имя пользователя или email"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                />
+        <div className="examples-section">
+          {/* Left column: login card */}
+          <div>
+            <div className="auth-card">
+              <div className="auth-header">
+                <h2>Вход в систему</h2>
+                <p>Добро пожаловать! Войдите в свой аккаунт для продолжения работы</p>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="password">Пароль</label>
-                <div className="password-wrapper">
+              <form className="auth-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="username">Имя пользователя или Email</label>
                   <input
-                    type="password"
-                    id="password"
-                    name="password"
+                    type="text"
+                    id="username"
+                    name="username"
                     className="form-input"
-                    placeholder="Введите пароль"
-                    value={formData.password}
+                    placeholder="Введите имя пользователя или email"
+                    value={formData.username}
                     onChange={handleChange}
                     required
                   />
                 </div>
+
+                <div className="form-group">
+                  <label htmlFor="password">Пароль</label>
+                  <div className="password-wrapper">
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      className="form-input"
+                      placeholder="Введите пароль"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-options">
+                  <label className="checkbox-label">
+                    <input
+                      type="checkbox"
+                      id="rememberMe"
+                      name="rememberMe"
+                      checked={formData.rememberMe}
+                      onChange={handleChange}
+                    />
+                    <span className="checkbox-custom"></span>
+                    Запомнить меня
+                  </label>
+                </div>
+
+                <div className="form-actions">
+                  <button type="submit" className="btn btn-primary btn-full">Войти</button>
+                </div>
+              </form>
+
+              <div className="auth-footer">
+                <p>Нет аккаунта? <Link to="/register" className="auth-link">Зарегистрироваться</Link></p>
               </div>
+            </div>
+          </div>
 
-              <div className="form-options">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    id="rememberMe"
-                    name="rememberMe"
-                    checked={formData.rememberMe}
-                    onChange={handleChange}
-                  />
-                  <span className="checkbox-custom"></span>
-                  Запомнить меня
-                </label>
+          {/* Right column: description card to match RegisterPage visuals */}
+          <div>
+            <div className="example-card">
+              <div className="example-header">
+                <h3>Добро пожаловать в AI Chat</h3>
               </div>
-
-              <button type="submit" className="btn btn-primary btn-full">
-                <span className="btn-text">Войти</span>
-              </button>
-            </form>
-
-            <div className="auth-footer">
-              <p>Нет аккаунта? <Link to="/register" className="auth-link">Зарегистрироваться</Link></p>
-            </div>
-          </div>
-        </div>
-
-        <div className="examples-section">
-          <div className="example-card">
-            <div className="example-header">
-              <h3>💡 Советы</h3>
-            </div>
-            <div className="example-content">
-              <p>Используйте AI CHAT для генерации идей, прототипов и анализа данных.</p>
-            </div>
-          </div>
-          <div className="example-card">
-            <div className="example-header">
-              <h3>🔒 Безопасность</h3>
-            </div>
-            <div className="example-content">
-              <p>Мы не храним ваши пароли в открытом виде. Войдите безопасно.</p>
-            </div>
-          </div>
-          <div className="example-card">
-            <div className="example-header">
-              <h3>🚀 Начать</h3>
-            </div>
-            <div className="example-content">
-              <p>Зарегистрируйтесь, чтобы получить больше возможностей.</p>
+              <div className="example-content">
+                <p>Используйте мощь искусственного интеллекта для общения, генерации идей и автоматизации задач. Быстро начните и исследуйте возможности.</p>
+                <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
+                  <Link to="/register" className="auth-link">Зарегистрироваться</Link>
+                  <Link to="/" className="auth-link">На главную</Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

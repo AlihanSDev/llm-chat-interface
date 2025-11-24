@@ -1,28 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../hooks/useAuth';
 import BackgroundEffects from '../common/BackgroundEffects';
 import '../../styles/App.css';
+import { usePageTransition } from '../../hooks/usePageTransition';
+import SettingsModal from '../common/SettingsModal';
 
 const HomePage = () => {
   const { user, logout } = useAuth();
   const [message, setMessage] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const { createNewChat, sendMessage, settings, saveSettings } = useChat();
+
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+
+  const { playEntry, playExit } = usePageTransition();
 
   useEffect(() => {
+    playEntry();
+  }, [playEntry]);
 
-    setTimeout(() => {
-      document.body.classList.add('loaded');
-      document.querySelectorAll('.input-section, .examples-section').forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('content-loaded');
-        }, index * 200);
-      });
-    }, 100);
-  }, []);
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
 
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      console.log('Отправка сообщения:', message);
+    try {
+      const newId = await createNewChat?.();
+      setSidebarOpen(false);
+
+      try {
+        await playExit(500);
+      } catch (e) {
+
+      }
+
+      if (newId) {
+        navigate('/chat', { state: { chatId: newId } });
+      } else {
+        navigate('/chat');
+      }
+
+      
+      await sendMessage?.(message);
+    } catch (err) {
+      console.error('Ошибка при создании чата / отправке сообщения:', err);
+    } finally {
       setMessage('');
     }
   };
@@ -37,10 +60,19 @@ const HomePage = () => {
     };
     
     setMessage(actionTexts[action] || '');
-    
     document.querySelectorAll('.quick-action-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+  
+    try {
+      
+      const activeTarget = window.event?.target || null;
+      if (activeTarget && activeTarget.classList) activeTarget.classList.add('active');
+    } catch (e) {
+      
+    }
   };
+
+  const toggleSidebar = () => setSidebarOpen(s => !s);
+  const closeSidebar = () => setSidebarOpen(false);
 
   const handleExampleClick = (exampleText) => {
     setMessage(exampleText);
@@ -53,6 +85,40 @@ const HomePage = () => {
   return (
     <div className="main-container">
       <BackgroundEffects />
+      {/* Sidebar + overlay */}
+      <div id="sidebar" className={`sidebar${sidebarOpen ? ' open' : ''}`} role="navigation" aria-hidden={!sidebarOpen}>
+        <div className="sidebar-header">
+          <h2>Меню</h2>
+          <button className="close-sidebar" onClick={closeSidebar} aria-label="Закрыть меню">✕</button>
+        </div>
+        <div className="sidebar-content">
+          <div className="sidebar-actions">
+            <button className="sidebar-action-btn" onClick={async () => {
+              const newId = await createNewChat?.();
+              setSidebarOpen(false);
+              try {
+                await playExit(500);
+              } catch (e) {
+                
+              }
+              if (newId) {
+                navigate('/chat', { state: { chatId: newId } });
+              } else {
+                navigate('/chat');
+              }
+            }}>Новый чат</button>
+            <button className="sidebar-action-btn secondary">История</button>
+            <button className="sidebar-action-btn" onClick={() => { setShowSettingsModal(s => !s); }} aria-expanded={showSettingsModal}>Настройки</button>
+          </div>
+          { /* Settings modal is rendered at top-level to overlay */ }
+          <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} settings={settings} onSave={saveSettings} />
+
+          <div className="chat-list">
+            <div className="chat-item"><div className="chat-info"><div className="chat-title">Пример чата</div><div className="chat-time">сегодня</div></div><button className="chat-delete">Удалить</button></div>
+          </div>
+        </div>
+      </div>
+      {sidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar} />}
 
       <input 
         type="password" 
@@ -81,7 +147,7 @@ const HomePage = () => {
 
       <header className="top-header">
         <div className="header-left">
-          <button className="menu-btn" id="menuBtn">
+          <button className="menu-btn" id="menuBtn" onClick={toggleSidebar} aria-expanded={sidebarOpen} aria-controls="sidebar">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="3" y1="6" x2="21" y2="6"/>
               <line x1="3" y1="12" x2="21" y2="12"/>
@@ -159,7 +225,7 @@ const HomePage = () => {
           
           {/* Быстрые кнопки */}
           <div className="quick-actions">
-            <button className="quick-action-btn active" data-action="inspiration" onClick={() => handleQuickAction('inspiration')}>
+            <button className="quick-action-btn active" data-action="inspiration" onClick={(e) => { handleQuickAction('inspiration', e); e.currentTarget.classList.add('active'); }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="12" y1="8" x2="12" y2="12"/>
@@ -167,7 +233,7 @@ const HomePage = () => {
               </svg>
               Вдохновение
             </button>
-            <button className="quick-action-btn" data-action="webapp" onClick={() => handleQuickAction('webapp')}>
+            <button className="quick-action-btn" data-action="webapp" onClick={(e) => { handleQuickAction('webapp', e); e.currentTarget.classList.add('active'); }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
                 <line x1="8" y1="21" x2="16" y2="21"/>
@@ -175,14 +241,14 @@ const HomePage = () => {
               </svg>
               Веб-приложение
             </button>
-            <button className="quick-action-btn" data-action="mobile" onClick={() => handleQuickAction('mobile')}>
+            <button className="quick-action-btn" data-action="mobile" onClick={(e) => { handleQuickAction('mobile', e); e.currentTarget.classList.add('active'); }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
                 <line x1="12" y1="18" x2="12.01" y2="18"/>
               </svg>
               Мобильное приложение
             </button>
-            <button className="quick-action-btn" data-action="data" onClick={() => handleQuickAction('data')}>
+            <button className="quick-action-btn" data-action="data" onClick={(e) => { handleQuickAction('data', e); e.currentTarget.classList.add('active'); }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                 <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
@@ -190,7 +256,7 @@ const HomePage = () => {
               </svg>
               Анализ данных
             </button>
-            <button className="quick-action-btn" data-action="creativity" onClick={() => handleQuickAction('creativity')}>
+            <button className="quick-action-btn" data-action="creativity" onClick={(e) => { handleQuickAction('creativity', e); e.currentTarget.classList.add('active'); }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>

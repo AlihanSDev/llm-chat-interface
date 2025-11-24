@@ -3,18 +3,14 @@ import Chat from '../Chat';
 import BackgroundEffects from '../common/BackgroundEffects';
 import '../../styles/style.css';
 import '../../styles/chat.css';
+import { usePageTransition } from '../../hooks/usePageTransition';
 
 const ChatPage = () => {
+  const { playEntry } = usePageTransition();
+
   useEffect(() => {
-    setTimeout(() => {
-      document.body.classList.add('loaded');
-      document.querySelectorAll('.input-section, .examples-section').forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('content-loaded');
-        }, index * 200);
-      });
-    }, 100);
-  }, []);
+    playEntry(['.chat-container', '.messages-section', '.input-section']);
+  }, [playEntry]);
 
   return (
     <div className="main-container">

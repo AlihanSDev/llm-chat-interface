@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useChat } from '../hooks/useChat';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
@@ -11,7 +12,19 @@ const Chat = () => {
     sendMessage,
     createNewChat,
     clearChat,
+    loadChatHistory,
+    setCurrentChatId,
   } = useChat();
+
+  const location = useLocation();
+  const { chatId } = location.state || {};
+
+  useEffect(() => {
+    if (chatId) {
+      if (typeof setCurrentChatId === 'function') setCurrentChatId(chatId);
+      if (typeof loadChatHistory === 'function') loadChatHistory(chatId);
+    }
+  }, [chatId, setCurrentChatId, loadChatHistory]);
 
   const [localMessages, setLocalMessages] = useState([]);
 
