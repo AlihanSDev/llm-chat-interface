@@ -51,7 +51,7 @@ const LoginPage = () => {
           </Link>
         </div>
         <div className="header-center">
-          <h1 className="logo">AI CHAT</h1>
+          <h1 className="logo">COSMOCHAT AI</h1>
         </div>
         <div className="header-right">
           <Link to="/register" className="auth-link">Регистрация</Link>

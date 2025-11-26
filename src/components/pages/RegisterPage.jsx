@@ -53,7 +53,7 @@ const RegisterPage = () => {
           </Link>
         </div>
         <div className="header-center">
-          <h1 className="logo">AI CHAT</h1>
+          <h1 className="logo">COSMOCHAT AI</h1>
         </div>
         <div className="header-right">
           <Link to="/login" className="auth-link">Войти</Link>
@@ -67,7 +67,7 @@ const RegisterPage = () => {
             <div className="auth-card">
               <div className="auth-header">
                 <h2>Создание аккаунта</h2>
-                <p>Присоединяйтесь к AI Chat и начните общение с искусственным интеллектом</p>
+                <p>Присоединяйтесь к COSMOCHAT AI и начните общение с искусственным интеллектом</p>
               </div>
 
               <form className="auth-form" onSubmit={handleSubmit}>
@@ -143,7 +143,7 @@ const RegisterPage = () => {
           <div>
             <div className="example-card">
               <div className="example-header">
-                <h3>Добро пожаловать в AI Chat</h3>
+                <h3>Добро пожаловать в COSMOCHAT AI</h3>
               </div>
               <div className="example-content">
                 <p>Используйте мощь искусственного интеллекта для общения, генерации идей и автоматизации задач. Быстро начните и исследуйте возможности.</p>
